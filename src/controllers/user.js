@@ -1,5 +1,6 @@
 const { createUser, getUserByEmail } = require("../services");
 const { checkErrors } = require("../utils/checkErrors");
+const generateToken = require("../utils/generateToken");
 const { successResponse } = require("../utils/successResponse");
 
 module.exports = {
@@ -13,9 +14,18 @@ module.exports = {
    */
   createUser: async (req, res) => {
     try {
-      const { email, password, firstName, lastName } = req.body;
-      const user = await createUser(email, firstName, lastName, password);
-      successResponse(res, 201, "User created successfully", user);
+      const { body } = req;
+      const user = await createUser(body);
+      let { id, first_name, last_name, email } = user[0];
+      const token = generateToken(id, email);
+      let result = {
+        id,
+        first_name,
+        last_name,
+        email,
+        token,
+      };
+      successResponse(res, 201, "User created successfully", result);
     } catch (error) {
       errorResponse(req, res, 500, error.message);
     }
@@ -31,8 +41,16 @@ module.exports = {
    */
   login: async (req, res) => {
     try {
-      let { user } = req;
-      successResponse(res, 200, "User logged in successfully", user);
+      let { id, first_name, last_name, email } = req.user;
+      let token = generateToken(id, email);
+      const result = {
+        id,
+        first_name,
+        last_name,
+        email,
+        token,
+      };
+      successResponse(res, 200, "User logged in successfully", result);
     } catch (error) {
       errorResponse(req, res, 500, error.message);
     }

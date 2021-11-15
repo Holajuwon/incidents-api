@@ -20,9 +20,11 @@ module.exports = {
       let inputErrors = checkErrors(req, res);
       if (inputErrors) return inputErrors;
 
-      const { clientId, title, description, city, country } = req.body;
+      let { id } = req.user;
+
+      const { title, description, city, country } = req.body;
       const incident = await createIncident(
-        clientId,
+        id,
         title,
         description,
         city,
@@ -43,9 +45,17 @@ module.exports = {
    */
   getIncidentByClientId: async (req, res) => {
     try {
-      const { clientId } = req.params;
-      const incident = await getIncidentByClientId(clientId);
-      successResponse(res, 200, "Incident retrieved successfully", incident);
+      let { id } = req.user;
+
+      const incident = await getIncidentByClientId(id);
+      if (!incident.length)
+        return errorResponse(
+          req,
+          res,
+          404,
+          "user have not created an incident"
+        );
+      successResponse(res, 200, "Incidents retrieved successfully", incident);
     } catch (error) {
       errorResponse(req, res, 500, error.message);
     }

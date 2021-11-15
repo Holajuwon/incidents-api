@@ -6,10 +6,11 @@ const {
   getIncidentByClientId,
 } = require("../controllers");
 const validateIncident = require("../middlewares/requestValidator/validateIncident");
+const verifyToken = require("../middlewares/verifyToken");
 
 router
-  .get("/", getAllIncidents)
-  .get("/:clientId", getIncidentByClientId)
-  .post("/", [validateIncident], createIncident);
+  .get("/all", [verifyToken], getAllIncidents)
+  .get("/", [verifyToken], getIncidentByClientId)
+  .post("/", [verifyToken, validateIncident], createIncident);
 
 module.exports = router;

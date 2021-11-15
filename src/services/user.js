@@ -1,6 +1,6 @@
 const { createUser, findUserByEmail } = require("../db/queries");
 const { db } = require("../db");
-const hashHandler = require('../utils/hashHandler');
+const hashHandler = require("../utils/hashHandler");
 
 module.exports = {
   /**
@@ -11,11 +11,11 @@ module.exports = {
    * @param {string} password - The password of the user
    * @returns {object} - The created user
    */
-  createUser: (email, firstName, lastName, password) => {
+  createUser: ({ email, firstName, lastName, password }) => {
     let hashedPassword = hashHandler.generateHash(password);
     return db.any(createUser, [email, firstName, lastName, hashedPassword]);
   },
-  
+
   /**
    * @description - find a user by email
    * @param {string} email - The email of the user

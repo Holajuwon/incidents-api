@@ -1,11 +1,6 @@
 const { body } = require("express-validator");
 
 module.exports = [
-  body("clientId")
-    .trim(" ")
-    .toLowerCase()
-    .notEmpty()
-    .withMessage("please input your clientId"),
   body("title")
     .trim(" ")
     .toLowerCase()
