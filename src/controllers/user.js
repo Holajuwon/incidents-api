@@ -1,5 +1,4 @@
 const { createUser, getUserByEmail } = require("../services");
-const { checkErrors } = require("../utils/checkErrors");
 const generateToken = require("../utils/generateToken");
 const { successResponse } = require("../utils/successResponse");
 
