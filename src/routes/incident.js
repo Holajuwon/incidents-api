@@ -5,10 +5,11 @@ const {
   getAllIncidents,
   getIncidentByClientId,
 } = require("../controllers");
+const validateIncident = require("../middlewares/requestValidator/validateIncident");
 
 router
   .get("/", getAllIncidents)
   .get("/:clientId", getIncidentByClientId)
-  .post("/", createIncident);
+  .post("/", [validateIncident], createIncident);
 
 module.exports = router;

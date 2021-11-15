@@ -3,6 +3,7 @@ const {
   getIncidentByClientId,
   getAllIncident,
 } = require("../services");
+const { checkErrors } = require("../utils/checkErrors");
 const { errorResponse } = require("../utils/errorResponse");
 const { successResponse } = require("../utils/successResponse");
 
@@ -16,6 +17,9 @@ module.exports = {
    */
   createIncident: async (req, res) => {
     try {
+      let inputErrors = checkErrors(req, res);
+      if (inputErrors) return inputErrors;
+
       const { clientId, title, description, city, country } = req.body;
       const incident = await createIncident(
         clientId,

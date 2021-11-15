@@ -1,3 +1,4 @@
+# Incident API
 ## WORKFLOW
 The required working flow :
 - Create a post endpoint to create a user (name, email unique, password, first name and last name), 

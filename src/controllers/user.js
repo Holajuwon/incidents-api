@@ -1,4 +1,5 @@
 const { createUser, getUserByEmail } = require("../services");
+const { checkErrors } = require("../utils/checkErrors");
 const { successResponse } = require("../utils/successResponse");
 
 module.exports = {
