@@ -1,4 +1,5 @@
-const { createUser, getUserByEmail } = require("../services");
+const { createUser, getUserByEmail, updatePassword } = require("../services");
+const { errorResponse } = require("../utils/errorResponse");
 const generateToken = require("../utils/generateToken");
 const { successResponse } = require("../utils/successResponse");
 
@@ -50,6 +51,34 @@ module.exports = {
         token,
       };
       successResponse(res, 200, "User logged in successfully", result);
+    } catch (error) {
+      errorResponse(req, res, 500, error.message);
+    }
+  },
+
+  forgotPassword: async (req, res) => {
+    try {
+      const { user } = req;
+
+      if (!user) {
+        errorResponse(req, res, 404, "You do not have an account with us.");
+      }
+      const { email, password, id } = user;
+      const token = generateToken(id, email, password, "1h");
+      successResponse(res, 200, "Password reset link sent successfully", {
+        resetURL: `${req.get("host")}/api/v1/user/reset_password/${token}`,
+      });
+    } catch (error) {
+      errorResponse(req, res, 500, error.message);
+    }
+  },
+  resetPassword: async (req, res) => {
+    try {
+      const { user } = req;
+      const { password } = req.body;
+
+      let result = await updatePassword(password, user.id);
+      successResponse(res, 200, "Password reset successfully", result);
     } catch (error) {
       errorResponse(req, res, 500, error.message);
     }

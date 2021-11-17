@@ -17,3 +17,18 @@ exports.loginUserSchema = {
   }),
   message: "Error logging user in",
 };
+
+exports.resetPassSchema = {
+  schema: Joi.object().keys({
+    password: Joi.string().required(),
+    // confirmPassword: Joi.string().required(),
+  }),
+  message: "Error resetting password",
+};
+
+exports.forgotPassSchema = {
+  schema: Joi.object().keys({
+    email: Joi.string().email().required(),
+  }),
+  message: "Error resetting password",
+};

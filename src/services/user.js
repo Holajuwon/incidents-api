@@ -1,4 +1,8 @@
-const { createUser, findUserByEmail } = require("../db/queries");
+const {
+  createUser,
+  findUserByEmail,
+  updatePassword,
+} = require("../db/queries");
 const { db } = require("../db");
 const hashHandler = require("../utils/hashHandler");
 
@@ -23,5 +27,10 @@ module.exports = {
    */
   getUserByEmail: (email) => {
     return db.any(findUserByEmail, [email]);
+  },
+
+  updatePassword: (password, id) => {
+    let hashedPassword = hashHandler.generateHash(password);
+    return db.any(updatePassword, [hashedPassword, id]);
   },
 };

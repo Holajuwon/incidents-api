@@ -1,4 +1,4 @@
-const { createUser, getUserByEmail } = require("./user");
+const { createUser, getUserByEmail, updatePassword } = require("./user");
 const {
   createIncident,
   getAllIncident,
@@ -8,6 +8,7 @@ const {
 module.exports = {
   createUser,
   getUserByEmail,
+  updatePassword,
   createIncident,
   getAllIncident,
   getIncidentByClientId,

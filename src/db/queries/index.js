@@ -1,4 +1,9 @@
-const { createUserTable, createUser, findUserByEmail } = require("./user");
+const {
+  createUserTable,
+  createUser,
+  findUserByEmail,
+  updatePassword,
+} = require("./user");
 const {
   createIncidentTable,
   createIncident,
@@ -9,6 +14,7 @@ const {
 module.exports = {
   createUserTable,
   createUser,
+  updatePassword,
   findUserByEmail,
   createIncidentTable,
   createIncident,
